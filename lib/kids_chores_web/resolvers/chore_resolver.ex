@@ -2,7 +2,6 @@ defmodule KidsChoresWeb.Resolvers.ChoreResolver do
   alias KidsChores.Chores
 
   def list_chores(_parent, _args, _resolutions) do
-    IO.inspect(label: "HERE IN list_chores>>>")
     {:ok, Chores.list_chores()}
   end
 
