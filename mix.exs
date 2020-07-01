@@ -43,6 +43,7 @@ defmodule KidsChores.MixProject do
       {:cowboy, "< 2.8.0", override: true},
       {:ecto_sql, "~> 3.1"},
       {:gettext, "~> 0.11"},
+      {:guardian, "~> 1.0"},
       {:jason, "~> 1.0"},
       {:pbkdf2_elixir, "~> 0.12"},
       {:phoenix, "~> 1.4.10"},

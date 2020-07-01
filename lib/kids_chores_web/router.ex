@@ -1,7 +1,8 @@
 defmodule KidsChoresWeb.Router do
-  use KidsChoresWeb, :router
+  use Phoenix.Router
 
   pipeline :api do
+    plug KidsChoresWeb.Context
     plug :accepts, ["json"]
   end
 
