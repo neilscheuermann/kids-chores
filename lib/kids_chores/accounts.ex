@@ -201,15 +201,15 @@ defmodule KidsChores.Accounts do
   alias KidsChores.Accounts.AccountOwner
 
   @doc """
-  Returns the list of acount_owners.
+  Returns the list of account_owners.
 
   ## Examples
 
-      iex> list_acount_owners()
+      iex> list_account_owners()
       [%AccountOwner{}, ...]
 
   """
-  def list_acount_owners do
+  def list_account_owners do
     Repo.all(AccountOwner)
   end
 
@@ -230,7 +230,10 @@ defmodule KidsChores.Accounts do
   def get_account_owner!(id), do: Repo.get!(AccountOwner, id)
 
   @doc """
-  Creates a account_owner.
+  Creates an account_owner without login credentials.
+
+  See `register_account_owner` to create an account_owner 
+  and add associated email and password credentials.
 
   ## Examples
 
@@ -243,7 +246,26 @@ defmodule KidsChores.Accounts do
   """
   def create_account_owner(attrs \\ %{}) do
     %AccountOwner{}
-    |> AccountOwner.changeset(attrs)
+    |> AccountOwner.registration_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates an account_owner AND adds associated email and 
+  password credentials.
+
+  ## Examples
+
+      iex> register_account_owner(%{field: value})
+      {:ok, %AccountOwner{}}
+
+      iex> register_account_owner(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def register_account_owner(attrs \\ %{}) do
+    %AccountOwner{}
+    |> AccountOwner.registration_changeset(attrs)
     |> Repo.insert()
   end
 

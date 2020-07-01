@@ -102,7 +102,10 @@ defmodule KidsChores.AccountsTest do
 
     test "update_credential/2 with valid data updates the credential" do
       credential = credential_fixture()
-      assert {:ok, %Credential{} = credential} = Accounts.update_credential(credential, @update_attrs)
+
+      assert {:ok, %Credential{} = credential} =
+               Accounts.update_credential(credential, @update_attrs)
+
       assert credential.email == "some updated email"
       assert credential.password_hash == "some updated password_hash"
     end
@@ -125,7 +128,7 @@ defmodule KidsChores.AccountsTest do
     end
   end
 
-  describe "acount_owners" do
+  describe "account_owners" do
     alias KidsChores.Accounts.AccountOwner
 
     @valid_attrs %{username: "some username"}
@@ -141,9 +144,9 @@ defmodule KidsChores.AccountsTest do
       account_owner
     end
 
-    test "list_acount_owners/0 returns all acount_owners" do
+    test "list_account_owners/0 returns all acount_owners" do
       account_owner = account_owner_fixture()
-      assert Accounts.list_acount_owners() == [account_owner]
+      assert Accounts.list_account_owners() == [account_owner]
     end
 
     test "get_account_owner!/1 returns the account_owner with given id" do
@@ -162,13 +165,19 @@ defmodule KidsChores.AccountsTest do
 
     test "update_account_owner/2 with valid data updates the account_owner" do
       account_owner = account_owner_fixture()
-      assert {:ok, %AccountOwner{} = account_owner} = Accounts.update_account_owner(account_owner, @update_attrs)
+
+      assert {:ok, %AccountOwner{} = account_owner} =
+               Accounts.update_account_owner(account_owner, @update_attrs)
+
       assert account_owner.username == "some updated username"
     end
 
     test "update_account_owner/2 with invalid data returns error changeset" do
       account_owner = account_owner_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_account_owner(account_owner, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_account_owner(account_owner, @invalid_attrs)
+
       assert account_owner == Accounts.get_account_owner!(account_owner.id)
     end
 
