@@ -229,6 +229,28 @@ defmodule KidsChores.Accounts do
   """
   def get_account_owner!(id), do: Repo.get!(AccountOwner, id)
 
+  def get_account_owner_by_email(email) do
+    from(ao in AccountOwner, join: c in assoc(ao, :credential), where: c.email == ^email)
+    |> Repo.one()
+    |> Repo.preload(:credential)
+  end
+
+  def authenticate_by_email_and_pass(email, given_pass) do
+    account_owner = get_account_owner_by_email(email)
+
+    cond do
+      account_owner && Comeonin.Pbkdf2.checkpw(given_pass, account_owner.credential.password_hash) ->
+        {:ok, account_owner}
+
+      account_owner ->
+        {:error, :unauthorized}
+
+      true ->
+        Comeonin.Bcrypt.dummy_checkpw()
+        {:error, :not_found}
+    end
+  end
+
   @doc """
   Creates an account_owner without login credentials.
 
