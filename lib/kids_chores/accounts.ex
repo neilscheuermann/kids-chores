@@ -197,4 +197,100 @@ defmodule KidsChores.Accounts do
   def change_credential(%Credential{} = credential) do
     Credential.changeset(credential, %{})
   end
+
+  alias KidsChores.Accounts.AccountOwner
+
+  @doc """
+  Returns the list of acount_owners.
+
+  ## Examples
+
+      iex> list_acount_owners()
+      [%AccountOwner{}, ...]
+
+  """
+  def list_acount_owners do
+    Repo.all(AccountOwner)
+  end
+
+  @doc """
+  Gets a single account_owner.
+
+  Raises `Ecto.NoResultsError` if the Account owner does not exist.
+
+  ## Examples
+
+      iex> get_account_owner!(123)
+      %AccountOwner{}
+
+      iex> get_account_owner!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_account_owner!(id), do: Repo.get!(AccountOwner, id)
+
+  @doc """
+  Creates a account_owner.
+
+  ## Examples
+
+      iex> create_account_owner(%{field: value})
+      {:ok, %AccountOwner{}}
+
+      iex> create_account_owner(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_account_owner(attrs \\ %{}) do
+    %AccountOwner{}
+    |> AccountOwner.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a account_owner.
+
+  ## Examples
+
+      iex> update_account_owner(account_owner, %{field: new_value})
+      {:ok, %AccountOwner{}}
+
+      iex> update_account_owner(account_owner, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_account_owner(%AccountOwner{} = account_owner, attrs) do
+    account_owner
+    |> AccountOwner.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a account_owner.
+
+  ## Examples
+
+      iex> delete_account_owner(account_owner)
+      {:ok, %AccountOwner{}}
+
+      iex> delete_account_owner(account_owner)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_account_owner(%AccountOwner{} = account_owner) do
+    Repo.delete(account_owner)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking account_owner changes.
+
+  ## Examples
+
+      iex> change_account_owner(account_owner)
+      %Ecto.Changeset{source: %AccountOwner{}}
+
+  """
+  def change_account_owner(%AccountOwner{} = account_owner) do
+    AccountOwner.changeset(account_owner, %{})
+  end
 end

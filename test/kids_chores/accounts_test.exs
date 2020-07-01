@@ -124,4 +124,63 @@ defmodule KidsChores.AccountsTest do
       assert %Ecto.Changeset{} = Accounts.change_credential(credential)
     end
   end
+
+  describe "acount_owners" do
+    alias KidsChores.Accounts.AccountOwner
+
+    @valid_attrs %{username: "some username"}
+    @update_attrs %{username: "some updated username"}
+    @invalid_attrs %{username: nil}
+
+    def account_owner_fixture(attrs \\ %{}) do
+      {:ok, account_owner} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Accounts.create_account_owner()
+
+      account_owner
+    end
+
+    test "list_acount_owners/0 returns all acount_owners" do
+      account_owner = account_owner_fixture()
+      assert Accounts.list_acount_owners() == [account_owner]
+    end
+
+    test "get_account_owner!/1 returns the account_owner with given id" do
+      account_owner = account_owner_fixture()
+      assert Accounts.get_account_owner!(account_owner.id) == account_owner
+    end
+
+    test "create_account_owner/1 with valid data creates a account_owner" do
+      assert {:ok, %AccountOwner{} = account_owner} = Accounts.create_account_owner(@valid_attrs)
+      assert account_owner.username == "some username"
+    end
+
+    test "create_account_owner/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_account_owner(@invalid_attrs)
+    end
+
+    test "update_account_owner/2 with valid data updates the account_owner" do
+      account_owner = account_owner_fixture()
+      assert {:ok, %AccountOwner{} = account_owner} = Accounts.update_account_owner(account_owner, @update_attrs)
+      assert account_owner.username == "some updated username"
+    end
+
+    test "update_account_owner/2 with invalid data returns error changeset" do
+      account_owner = account_owner_fixture()
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_account_owner(account_owner, @invalid_attrs)
+      assert account_owner == Accounts.get_account_owner!(account_owner.id)
+    end
+
+    test "delete_account_owner/1 deletes the account_owner" do
+      account_owner = account_owner_fixture()
+      assert {:ok, %AccountOwner{}} = Accounts.delete_account_owner(account_owner)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_account_owner!(account_owner.id) end
+    end
+
+    test "change_account_owner/1 returns a account_owner changeset" do
+      account_owner = account_owner_fixture()
+      assert %Ecto.Changeset{} = Accounts.change_account_owner(account_owner)
+    end
+  end
 end
