@@ -22,6 +22,10 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :kids_chores, KidsChores.Guardian,
+  issuer: "kids_chores",
+  secret_key: "TZrvD2n6fd3S+PNtZUrq7Q2yJ/l28XDnreEnLd3C2a2RIDOiMSLRLTdrBKYx8qoO"
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
