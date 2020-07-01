@@ -17,8 +17,24 @@ function Chores() {
   return (
     <div>
       <h1>Chores</h1>
-      <Query query={LIST_CHORES_QUERY}></Query>
-      <div></div>
+      <Query query={LIST_CHORES_QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return "Loading...";
+          if (loading) return `Error! ${error.message}`;
+
+          return (
+            <ul>
+              {data.listChores.map((chore) => (
+                <li>
+                  {chore.name}: {chore.goal_days}
+                </li>
+              ))}
+            </ul>
+          );
+        }}
+      </Query>
     </div>
   );
 }
+
+export default Chores;

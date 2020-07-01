@@ -1,7 +1,8 @@
 defmodule KidsChoresWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :kids_chores
+  use Absinthe.Phoenix.Endpoint
 
-  socket "/socket", KidsChoresWeb.UserSocket,
+  socket "/socket", KidsChoresWeb.AbsintheSocket,
     websocket: true,
     longpoll: false
 
@@ -24,6 +25,7 @@ defmodule KidsChoresWeb.Endpoint do
   end
 
   plug Plug.RequestId
+  plug Plug.Logger
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
   plug Plug.Parsers,
@@ -33,6 +35,7 @@ defmodule KidsChoresWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
+  plug CORSPlug
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
