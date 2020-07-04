@@ -18,7 +18,7 @@ defmodule KidsChoresWeb.Context do
   def build_context(conn) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
          {:ok, claim} <- Guardian.decode_and_verify(token),
-         user when not is_nil(user) <- AccountOwner.find(claim["sub"]) do
+         account_owner when not is_nil(account_owner) <- AccountOwner.find(claim["sub"]) do
       %{current_account_owner: account_owner}
     else
       _ -> %{}
