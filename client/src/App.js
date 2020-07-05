@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/react-hooks";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createClient } from "./util/apollo";
 // import { Meta, Nav } from "components";

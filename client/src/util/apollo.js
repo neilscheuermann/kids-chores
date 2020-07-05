@@ -2,7 +2,7 @@ import ApolloClient from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import * as AbsintheSocket from "@absinthe/socket";
 import { createAbsintheSocketLink } from "@absinthe/socket-apollo-link";
-import { Socket as PhoenixSocket, LongPoll } from "phoenix";
+import { Socket as PhoenixSocket } from "phoenix";
 import { createHttpLink } from "apollo-link-http";
 import { hasSubscription } from "@jumpn/utils-graphql";
 import { split } from "apollo-link";
@@ -72,16 +72,3 @@ export const createClient = () => {
     link,
   });
 };
-
-// import { InMemoryCache } from "apollo-cache-inmemory";
-// import { ApolloClient } from "apollo-client";
-// import { HttpLink } from "apollo-link-http";
-//
-// const HTTP_URI = "http://localhost:4005";
-// export const createClient = () => {
-//   return new ApolloClient({
-//     // we will change this later when seeting up the socket
-//     link: new HttpLink({ uri: HTTP_URI }),
-//     cache: new InMemoryCache(),
-//   });
-// };

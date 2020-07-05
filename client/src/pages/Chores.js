@@ -1,38 +1,67 @@
+import React, { useCallback } from "react";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import React from "react";
-import { Query } from "react-apollo";
+import GetSubscriptionsWorking from "../components/GetSubscriptionsWorking";
+
+const LIST_CHORES_QUERY = gql`
+  {
+    listChores {
+      id
+      name
+      goal_days
+      progress_days
+    }
+  }
+`;
+
+const LIST_CHORES_SUBSCRIPTION = gql`
+  subscription onChoreCreated {
+    choreCreated {
+      id
+      name
+      goalDays
+      progressDays
+    }
+  }
+`;
 
 function Chores() {
-  const LIST_CHORES_QUERY = gql`
-    {
-      listChores {
-        id
-        name
-        goal_days
-        progress_days
-      }
-    }
-  `;
+  const { subscribeToMore, data, ...queryResult } = useQuery(LIST_CHORES_QUERY);
+  console.log("data>>>", data);
+  console.log("queryResult>>>", queryResult);
+
+  // const subscribeToNew = useCallback(
+  //   () =>
+  //     subscribeToMore({
+  //       document: LIST_CHORES_SUBSCRIPTION,
+  //       updateQuery: (prev, { subscriptionData }) => {
+  //         console.log("Chores.js / inside subscribeToNew, prev>>>", prev);
+  //         console.log(
+  //           "Chores.js / inside subscribeToNew, subscriptionData>>>",
+  //           subscriptionData
+  //         );
+  //       },
+  //     }),
+  //   [subscribeToMore]
+  // );
 
   return (
     <div>
-      <h1>Chores</h1>
-      <Query query={LIST_CHORES_QUERY}>
-        {({ loading, error, data }) => {
-          if (loading) return "Loading...";
-          if (loading) return `Error! ${error.message}`;
-
-          return (
+      {!data ? null : (
+        <div>
+          <h1>Chores</h1>
+          <div>
             <ul>
               {data.listChores.map((chore) => (
-                <li>
+                <li key={chore.id}>
                   {chore.name}: {chore.goal_days}
                 </li>
               ))}
             </ul>
-          );
-        }}
-      </Query>
+          </div>
+          {/* <GetSubscriptionsWorking subscribeToNew={subscribeToNew} /> */}
+        </div>
+      )}
     </div>
   );
 }

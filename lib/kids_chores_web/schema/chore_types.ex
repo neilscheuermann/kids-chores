@@ -22,8 +22,8 @@ defmodule KidsChoresWeb.Schema.ChoreTypes do
   object :chore_mutations do
     @desc "Create a chore"
     field :create_chore, :chore do
-      arg :name, non_null(:string)
-      arg :goal_days, non_null(:integer)
+      arg(:name, non_null(:string))
+      arg(:goal_days, non_null(:integer))
 
       resolve(&Resolvers.ChoreResolver.create_chore/3)
     end
@@ -31,7 +31,15 @@ defmodule KidsChoresWeb.Schema.ChoreTypes do
 
   object :chore_subscriptions do
     field :chore_created, :chore do
-      # Hook this up later if needed
+      config(fn _, _ ->
+        {:ok, topic: "chores"}
+      end)
+
+      trigger(:create_chore,
+        topic: fn _ ->
+          "chores"
+        end
+      )
     end
   end
 end
