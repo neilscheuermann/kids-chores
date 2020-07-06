@@ -16,8 +16,8 @@ const HTTP_URI =
 
 const WS_URI =
   process.env.NODE_ENV === "production"
-    ? "https://<my_prod_domain_name/socket>"
-    : "http://localhost:4005/socket";
+    ? "wss://<my_prod_domain_name>/socket"
+    : "ws://localhost:4005/socket";
 
 export const createClient = () => {
   // Create the basic HTTP link.

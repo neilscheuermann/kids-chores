@@ -13,6 +13,6 @@ defmodule KidsChoresWeb.Schema do
   end
 
   subscription do
-    import_field(:chore_subscriptions)
+    import_fields(:chore_subscriptions)
   end
 end

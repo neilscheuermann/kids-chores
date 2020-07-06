@@ -11,7 +11,9 @@ defmodule KidsChores.Application do
       # Start the Ecto repository
       KidsChores.Repo,
       # Start the endpoint when the application starts
-      KidsChoresWeb.Endpoint
+      KidsChoresWeb.Endpoint,
+      # Start Absinthe subscriptions
+      {Absinthe.Subscription, [KidsChoresWeb.Endpoint]}
       # Starts a worker by calling: KidsChores.Worker.start_link(arg)
       # {KidsChores.Worker, arg},
     ]
