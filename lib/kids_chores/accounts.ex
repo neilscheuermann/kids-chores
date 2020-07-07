@@ -235,6 +235,10 @@ defmodule KidsChores.Accounts do
     |> Repo.preload(:credential)
   end
 
+  def find_account_owner(id) do
+    Repo.get(AccountOwner, id)
+  end
+
   def authenticate_by_email_and_pass(email, given_pass) do
     account_owner = get_account_owner_by_email(email)
 
