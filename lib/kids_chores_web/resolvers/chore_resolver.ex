@@ -5,7 +5,7 @@ defmodule KidsChoresWeb.Resolvers.ChoreResolver do
     {:ok, Chores.list_chores()}
   end
 
-  def create_chore(parent, args, resolutions) do
+  def create_chore(_parent, args, _resolutions) do
     args
     |> Chores.create_chore()
     |> case do

@@ -7,6 +7,7 @@ defmodule KidsChores.Accounts do
   alias KidsChores.Repo
 
   alias KidsChores.Accounts.User
+  alias KidsChores.Accounts.AccountOwner
 
   @doc """
   Returns the list of users.
@@ -198,8 +199,6 @@ defmodule KidsChores.Accounts do
     Credential.changeset(credential, %{})
   end
 
-  alias KidsChores.Accounts.AccountOwner
-
   @doc """
   Returns the list of account_owners.
 
@@ -239,7 +238,7 @@ defmodule KidsChores.Accounts do
     Repo.get(AccountOwner, id)
   end
 
-  def authenticate_by_email_and_pass(email, given_pass) do
+  def authenticate(email, given_pass) do
     account_owner = get_account_owner_by_email(email)
 
     cond do

@@ -1,15 +1,14 @@
-import React, { useCallback } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import React, { useCallback, useEffect } from "react";
+import { useQuery, useSubscription } from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import GetSubscriptionsWorking from "../components/GetSubscriptionsWorking";
 
 const LIST_CHORES_QUERY = gql`
   {
     listChores {
       id
       name
-      goal_days
-      progress_days
+      goalDays
+      progressDays
     }
   }
 `;
@@ -26,24 +25,26 @@ const LIST_CHORES_SUBSCRIPTION = gql`
 `;
 
 function Chores() {
-  const { subscribeToMore, data, ...queryResult } = useQuery(LIST_CHORES_QUERY);
-  console.log("data>>>", data);
-  console.log("queryResult>>>", queryResult);
+  const { data, subscribeToMore, ...queryResult } = useQuery(LIST_CHORES_QUERY);
 
-  // const subscribeToNew = useCallback(
-  //   () =>
-  //     subscribeToMore({
-  //       document: LIST_CHORES_SUBSCRIPTION,
-  //       updateQuery: (prev, { subscriptionData }) => {
-  //         console.log("Chores.js / inside subscribeToNew, prev>>>", prev);
-  //         console.log(
-  //           "Chores.js / inside subscribeToNew, subscriptionData>>>",
-  //           subscriptionData
-  //         );
-  //       },
-  //     }),
-  //   [subscribeToMore]
-  // );
+  useEffect(() => {
+    subscribeToMore({
+      document: LIST_CHORES_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+
+        const { choreCreated } = subscriptionData.data;
+        const { listChores } = prev;
+
+        if (!listChores.find((chore) => chore.id === choreCreated.id)) {
+          return {
+            ...prev,
+            listChores: [...listChores, choreCreated],
+          };
+        }
+      },
+    });
+  }, [subscribeToMore]);
 
   return (
     <div>
@@ -54,12 +55,11 @@ function Chores() {
             <ul>
               {data.listChores.map((chore) => (
                 <li key={chore.id}>
-                  {chore.name}: {chore.goal_days}
+                  {chore.name}: {chore.goalDays}
                 </li>
               ))}
             </ul>
           </div>
-          {/* <GetSubscriptionsWorking subscribeToNew={subscribeToNew} /> */}
         </div>
       )}
     </div>

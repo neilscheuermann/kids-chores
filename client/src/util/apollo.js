@@ -72,3 +72,9 @@ export const createClient = () => {
     link,
   });
 };
+
+export const refreshSocket = (socket) => {
+  // Close the connection to force a reconnection with the
+  // new token parameter.
+  socket.phoenixSocket.conn && socket.phoenixSocket.conn.close();
+};

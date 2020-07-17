@@ -31,7 +31,7 @@ defmodule KidsChoresWeb.Schema.ChoreTypes do
 
   object :chore_subscriptions do
     field :chore_created, :chore do
-      config(fn _, _ ->
+      config(fn _args, _context ->
         {:ok, topic: "chores"}
       end)
 
