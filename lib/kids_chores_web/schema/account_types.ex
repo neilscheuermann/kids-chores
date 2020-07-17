@@ -6,7 +6,15 @@ defmodule KidsChoresWeb.Schema.AccountTypes do
 
   @desc "One account_owner"
   object :account_owner do
-    field :user_name, :string
+    field :credential, :credential
+    field :id, :id
+    field :token, :string
+    field :username, :string
+  end
+
+  object :credential do
+    field :email, :string
+    field :password_hash, :string
   end
 
   object :account_queries do

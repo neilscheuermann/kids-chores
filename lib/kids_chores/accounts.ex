@@ -239,10 +239,13 @@ defmodule KidsChores.Accounts do
   end
 
   def authenticate(email, given_pass) do
-    account_owner = get_account_owner_by_email(email)
+    account_owner =
+      get_account_owner_by_email(email)
+      |> IO.inspect(label: ">>>")
 
     cond do
-      account_owner && Comeonin.Pbkdf2.checkpw(given_pass, account_owner.credential.password_hash) ->
+      account_owner &&
+          Comeonin.Pbkdf2.checkpw(given_pass, account_owner.credential.password_hash) ->
         {:ok, account_owner}
 
       account_owner ->

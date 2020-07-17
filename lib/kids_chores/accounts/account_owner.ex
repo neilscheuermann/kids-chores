@@ -9,6 +9,8 @@ defmodule KidsChores.Accounts.AccountOwner do
 
   schema "account_owners" do
     field :username, :string
+    field :token, :string, virtual: true
+
     has_many :users, User
     has_one :credential, Credential
 
