@@ -25,6 +25,8 @@ const LIST_CHORES_SUBSCRIPTION = gql`
 `;
 
 function Chores() {
+  // TODO>>>: will use things like this to set and access variables to conditionally render content
+  // const { token, id, setAuth } = useContext(AuthContext);
   const { data, subscribeToMore, ...queryResult } = useQuery(LIST_CHORES_QUERY);
 
   useEffect(() => {

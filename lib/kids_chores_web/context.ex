@@ -3,7 +3,7 @@ defmodule KidsChoresWeb.Context do
 
   import Plug.Conn
 
-  alias KidsChores.{Guardian, AccountOwner}
+  alias KidsChores.{Guardian, Accounts}
 
   def init(opts), do: opts
 
@@ -19,7 +19,7 @@ defmodule KidsChoresWeb.Context do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
          {:ok, claim} <- Guardian.decode_and_verify(token),
          account_owner when not is_nil(account_owner) <-
-           AccountOwner.find_account_owner(claim["sub"]) do
+           Accounts.find_account_owner(claim["sub"]) do
       %{current_account_owner: account_owner}
     else
       _ -> %{}

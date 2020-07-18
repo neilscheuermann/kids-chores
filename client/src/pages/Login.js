@@ -1,13 +1,12 @@
 import React, { useContext, useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import gql from "graphql-tag";
 import { Redirect } from "react-router-dom";
 import renderIf from "render-if";
 import { AuthContext } from "../util/context";
 
-export const LOGIN = gql`
+export const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
     authenticate(email: $email, password: $password) {
       id
@@ -21,9 +20,13 @@ const Login = () => {
   const [isInvalid, setIsInvalid] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { data, loading, error }] = useMutation(LOGIN, {
+  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
     onError: () => setIsInvalid(true),
   });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    login({ variables: { email, password } });
+  };
 
   if (data) {
     const {
@@ -33,65 +36,40 @@ const Login = () => {
   }
 
   if (token) {
-    return <Redirect to="/" />;
+    console.log("token>>>", token);
+    // return <Redirect to="/" />;
   }
 
   return (
     <>
       <Helmet>
-        <title>Socializer | Log in</title>
+        <title>KidsChores | Log in</title>
         <meta property="og:title" content="Socializer | Log in" />
       </Helmet>
-      <Container>
-        <Row>
-          <Col md={6} xs={12}>
-            <Form
-              data-testid="login-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                login({ variables: { email, password } });
-              }}
-            >
-              <Form.Group controlId="formEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="you@gmail.com"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    setIsInvalid(false);
-                  }}
-                  isInvalid={isInvalid}
-                />
-                {renderIf(error)(
-                  <Form.Control.Feedback type="invalid">
-                    Email or password is invalid
-                  </Form.Control.Feedback>
-                )}
-              </Form.Group>
 
-              <Form.Group controlId="formPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setIsInvalid(false);
-                  }}
-                  isInvalid={isInvalid}
-                />
-              </Form.Group>
-
-              <Button variant="primary" type="submit" disabled={loading}>
-                {loading ? "Logging in..." : "Log in"}
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Email:
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="text"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
     </>
   );
 };
