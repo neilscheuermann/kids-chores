@@ -3,7 +3,6 @@ import { useMutation } from "@apollo/react-hooks";
 import { Helmet } from "react-helmet";
 import gql from "graphql-tag";
 import { Redirect } from "react-router-dom";
-import renderIf from "render-if";
 import { AuthContext } from "../util/context";
 
 export const LOGIN_MUTATION = gql`
@@ -36,8 +35,7 @@ const Login = () => {
   }
 
   if (token) {
-    console.log("token>>>", token);
-    // return <Redirect to="/" />;
+    return <Redirect to="/" />;
   }
 
   return (

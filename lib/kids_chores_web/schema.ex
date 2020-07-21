@@ -7,6 +7,7 @@ defmodule KidsChoresWeb.Schema do
 
   query do
     import_fields(:chore_queries)
+    import_fields(:account_queries)
   end
 
   mutation do

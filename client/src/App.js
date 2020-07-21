@@ -3,9 +3,9 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createClient } from "./util/apollo";
 import StateProvider from "./containers/StateProvider";
-// import { Meta, Nav } from "components";
+import { Nav } from "./components";
 import "./App.css";
-import { Chores, Login } from "./pages";
+import { Chores, Home, Login } from "./pages";
 
 function App() {
   const client = useRef(createClient());
@@ -14,12 +14,12 @@ function App() {
     <ApolloProvider client={client.current}>
       <BrowserRouter>
         <StateProvider>
-          {/* <Meta /> */}
-          {/* <Nav /> */}
+          <Nav />
 
           <Switch>
             <Route path="/login" component={Login}></Route>
-            <Route component={Chores} />
+            <Route path="/chores" component={Chores}></Route>
+            <Route component={Home} />
           </Switch>
         </StateProvider>
       </BrowserRouter>

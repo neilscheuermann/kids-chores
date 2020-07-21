@@ -8,7 +8,6 @@ const StateProvider = ({ initialToken, initialUserId, socket, children }) => {
   const client = useApolloClient();
   const [token, setToken] = useState(initialToken || Cookies.get("token"));
   const [userId, setUserId] = useState(initialUserId || Cookies.get("userId"));
-  const [chatState, setChatState] = useState("default");
 
   // If the token changed (i.e. the user logged in
   // or out), clear the Apollo store and refresh the

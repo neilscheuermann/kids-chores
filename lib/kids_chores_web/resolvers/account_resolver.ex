@@ -17,6 +17,16 @@ defmodule KidsChoresWeb.Resolvers.AccountResolver do
     end
   end
 
+  def current_account_owner(_parent, _args, %{
+        context: %{current_account_owner: current_account_owner}
+      }) do
+    {:ok, current_account_owner}
+  end
+
+  def current_account_owner(_parent, _args, %{context: context}) do
+    {:error, "Unauthenticated"}
+  end
+
   defp account_owner_with_token(account_owner) do
     {:ok, token, _claims} = Guardian.encode_and_sign(account_owner)
     Map.put(account_owner, :token, token)

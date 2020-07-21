@@ -18,6 +18,10 @@ defmodule KidsChoresWeb.Schema.AccountTypes do
   end
 
   object :account_queries do
+    @desc "Get current account owner"
+    field :current_account_owner, :account_owner do
+      resolve(&Resolvers.AccountResolver.current_account_owner/3)
+    end
   end
 
   object :account_mutations do

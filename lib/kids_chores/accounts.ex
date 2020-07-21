@@ -239,9 +239,7 @@ defmodule KidsChores.Accounts do
   end
 
   def authenticate(email, given_pass) do
-    account_owner =
-      get_account_owner_by_email(email)
-      |> IO.inspect(label: ">>>")
+    account_owner = get_account_owner_by_email(email)
 
     cond do
       account_owner &&
