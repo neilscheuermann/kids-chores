@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { AuthContext } from "../util/context";
+import { CreateUserForm } from "../components";
 
 const USERS_QUERY = gql`
   query users {
@@ -49,6 +50,7 @@ export default function Users() {
   return (
     <>
       <h1>Users</h1>
+      <CreateUserForm />
       <div>
         {!data ? null : (
           <div>
