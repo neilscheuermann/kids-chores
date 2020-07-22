@@ -38,8 +38,8 @@ const AuthNav = () => {
 
   return (
     <AuthNavWrapper>
-      <NavLink to="/chores" role="button">
-        My Chores
+      <NavLink to="/users" role="button">
+        Users
       </NavLink>
       <NavLink
         to="/"

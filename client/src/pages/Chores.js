@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { useQuery, useSubscription } from "@apollo/react-hooks";
+import React, { useEffect } from "react";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
 const LIST_CHORES_QUERY = gql`
@@ -25,7 +25,7 @@ const LIST_CHORES_SUBSCRIPTION = gql`
 `;
 
 function Chores() {
-  const { data, subscribeToMore, ...queryResult } = useQuery(LIST_CHORES_QUERY);
+  const { data, subscribeToMore } = useQuery(LIST_CHORES_QUERY);
 
   useEffect(() => {
     subscribeToMore({

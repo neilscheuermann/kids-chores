@@ -16,11 +16,10 @@ export const LOGIN_MUTATION = gql`
 
 const Login = () => {
   const { token, setAuth } = useContext(AuthContext);
-  const [isInvalid, setIsInvalid] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
-    onError: () => setIsInvalid(true),
+  const [login, { data, error }] = useMutation(LOGIN_MUTATION, {
+    onError: () => console.error(error),
   });
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,7 +34,7 @@ const Login = () => {
   }
 
   if (token) {
-    return <Redirect to="/" />;
+    return <Redirect to="/users" />;
   }
 
   return (
