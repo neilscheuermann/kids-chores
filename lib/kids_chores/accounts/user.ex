@@ -14,7 +14,7 @@ defmodule KidsChores.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :password])
+    |> cast(attrs, [:name, :password, :account_owner_id])
     |> validate_required([:name])
   end
 end

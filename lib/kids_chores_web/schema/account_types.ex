@@ -35,15 +35,34 @@ defmodule KidsChoresWeb.Schema.AccountTypes do
   end
 
   object :account_mutations do
-    @desc "Create a chore"
+    @desc "Authenticate an account owner"
     field :authenticate, :account_owner do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
       resolve(&Resolvers.AccountResolver.authenticate/3)
     end
+
+    @desc "Create a user"
+    field :create_user, :user do
+      arg(:name, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&Resolvers.AccountResolver.create_user/3)
+    end
   end
 
   object :account_subscriptions do
+    field :user_created, :user do
+      config(fn _args, _context ->
+        {:ok, topic: "users"}
+      end)
+
+      trigger(:create_user,
+        topic: fn _user ->
+          "users"
+        end
+      )
+    end
   end
 end

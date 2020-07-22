@@ -17,5 +17,6 @@ defmodule KidsChoresWeb.Schema do
 
   subscription do
     import_fields(:chore_subscriptions)
+    import_fields(:account_subscriptions)
   end
 end
