@@ -23,6 +23,23 @@ defmodule KidsChores.Accounts do
   end
 
   @doc """
+  Returns users assigned to specified account owner.
+
+  ## Examples
+
+      iex> users()
+      [%User{}, ...]
+
+  """
+  def users(account_owner_id) do
+    Repo.all(
+      from u in User,
+        where: u.account_owner_id == ^account_owner_id,
+        order_by: [desc: u.name]
+    )
+  end
+
+  @doc """
   Gets a single user.
 
   Raises `Ecto.NoResultsError` if the User does not exist.

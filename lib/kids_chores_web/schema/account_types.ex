@@ -17,10 +17,20 @@ defmodule KidsChoresWeb.Schema.AccountTypes do
     field :password_hash, :string
   end
 
+  object :user do
+    field :id, :id
+    field :name, :string
+  end
+
   object :account_queries do
     @desc "Get current account owner"
     field :current_account_owner, :account_owner do
       resolve(&Resolvers.AccountResolver.current_account_owner/3)
+    end
+
+    @desc "Get a list of users belonging to the current_account_owner"
+    field :users, list_of(:user) do
+      resolve(&Resolvers.AccountResolver.users/3)
     end
   end
 
