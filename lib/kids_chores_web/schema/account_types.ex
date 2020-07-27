@@ -43,6 +43,14 @@ defmodule KidsChoresWeb.Schema.AccountTypes do
       resolve(&Resolvers.AccountResolver.authenticate/3)
     end
 
+    @desc "Authenticate a user"
+    field :authenticate_user, :user do
+      arg(:user_id, non_null(:id))
+      arg(:password, non_null(:string))
+
+      resolve(&Resolvers.AccountResolver.authenticate_user/3)
+    end
+
     @desc "Create a user"
     field :create_user, :user do
       arg(:name, non_null(:string))

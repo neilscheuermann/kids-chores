@@ -5,7 +5,7 @@ import { createClient } from "./util/apollo";
 import StateProvider from "./containers/StateProvider";
 import { Nav } from "./components";
 import "./App.css";
-import { Chores, Users, Home, Login } from "./pages";
+import { Chores, Users, User, Home, Login } from "./pages";
 
 function App() {
   const client = useRef(createClient());
@@ -19,6 +19,7 @@ function App() {
           <Switch>
             <Route path="/login" component={Login}></Route>
             <Route path="/users" component={Users}></Route>
+            <Route path="/user/:id" component={User}></Route>
             <Route path="/chores" component={Chores}></Route>
             <Route component={Home} />
           </Switch>

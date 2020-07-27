@@ -2,7 +2,8 @@ defmodule KidsChoresWeb.Resolvers.AccountResolver do
   alias KidsChores.{
     Accounts,
     Guardian,
-    Accounts.AccountOwner
+    Accounts.AccountOwner,
+    Accounts.User
   }
 
   def authenticate(_parent, %{email: email, password: password}, _resolutions) do
@@ -11,6 +12,20 @@ defmodule KidsChoresWeb.Resolvers.AccountResolver do
     |> case do
       {:ok, %AccountOwner{} = account_owner} ->
         {:ok, account_owner_with_token(account_owner)}
+
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
+  def authenticate_user(_parent, %{user_id: user_id, password: given_password}, _resolutions) do
+    user_id
+    |> Accounts.authenticate_user(given_password)
+    |> case do
+      {:ok, %User{} = user} ->
+        # TODO>>>: May need to add a token for users to preserve page refreshes?
+        # {:ok, account_owner_with_token(account_owner)}
+        {:ok, user}
 
       {:error, error} ->
         {:error, error}

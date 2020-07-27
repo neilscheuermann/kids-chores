@@ -56,6 +56,22 @@ defmodule KidsChores.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user.
+
+  Returns `nil` if the User does not exist.
+
+  ## Examples
+
+      iex> get_user(123)
+      %User{}
+
+      iex> get_user(456)
+      nil
+
+  """
+  def get_user(id), do: Repo.get(User, id)
+
+  @doc """
   Creates a user.
 
   ## Examples
@@ -264,6 +280,23 @@ defmodule KidsChores.Accounts do
         {:ok, account_owner}
 
       account_owner ->
+        {:error, :unauthorized}
+
+      true ->
+        Comeonin.Bcrypt.dummy_checkpw()
+        {:error, :not_found}
+    end
+  end
+
+  def authenticate_user(user_id, given_password) do
+    user = get_user(user_id)
+
+    cond do
+      user &&
+          given_password == user.password ->
+        {:ok, user}
+
+      user ->
         {:error, :unauthorized}
 
       true ->

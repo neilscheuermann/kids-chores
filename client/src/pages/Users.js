@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { AuthContext } from "../util/context";
@@ -55,7 +56,9 @@ export default function Users() {
         {!data ? null : (
           <div>
             {data.users.map((user) => (
-              <div key={user.id}>{user.name}</div>
+              <Link key={user.id} to={`/user/${user.id}`}>
+                {user.name}
+              </Link>
             ))}
           </div>
         )}
