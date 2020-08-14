@@ -20,6 +20,7 @@ defmodule KidsChoresWeb.Schema.AccountTypes do
   object :user do
     field :id, :id
     field :name, :string
+    field :token, :string
   end
 
   object :account_queries do

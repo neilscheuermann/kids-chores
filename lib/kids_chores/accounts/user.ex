@@ -6,6 +6,8 @@ defmodule KidsChores.Accounts.User do
   schema "users" do
     field :name, :string
     field :password, :string
+    field :token, :string, virtual: true
+
     belongs_to :account_owner, AccountOwner
 
     timestamps()

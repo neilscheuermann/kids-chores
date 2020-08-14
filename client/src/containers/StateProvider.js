@@ -6,12 +6,16 @@ import { AuthContext } from "../util/context";
 
 const StateProvider = ({
   initialToken,
+  initialCurrentUserToken,
   initialAccountOwnerId,
   socket,
   children,
 }) => {
   const client = useApolloClient();
   const [token, setToken] = useState(initialToken || Cookies.get("token"));
+  const [currentUserToken, setCurrentUserToken] = useState(
+    initialCurrentUserToken || Cookies.get("currentUserToken")
+  );
   const [accountOwnerId, setUserId] = useState(
     initialAccountOwnerId || Cookies.get("accountOwnerId")
   );
@@ -26,16 +30,23 @@ const StateProvider = ({
 
   const setAuth = (data) => {
     if (data) {
-      const { id, token } = data;
-      Cookies.set("token", token);
-      Cookies.set("accountOwnerId", id);
-      setToken(token);
-      setUserId(id);
+      const { id, token, currentUserToken } = data;
+      if (currentUserToken) {
+        Cookies.set("currentUserToken", currentUserToken);
+      }
+      if (id && token) {
+        Cookies.set("token", token);
+        Cookies.set("accountOwnerId", id);
+        setToken(token);
+        setUserId(id);
+      }
     } else {
       Cookies.remove("token");
+      Cookies.remove("currentUserToken");
       Cookies.remove("accountOwnerId");
       setToken(null);
       setUserId(null);
+      setCurrentUserToken(null);
     }
   };
 

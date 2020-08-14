@@ -25,7 +25,7 @@ defmodule KidsChoresWeb.Resolvers.AccountResolver do
       {:ok, %User{} = user} ->
         # TODO>>>: May need to add a token for users to preserve page refreshes?
         # {:ok, account_owner_with_token(account_owner)}
-        {:ok, user}
+        {:ok, user_with_token(user)}
 
       {:error, error} ->
         {:error, error}
@@ -81,6 +81,11 @@ defmodule KidsChoresWeb.Resolvers.AccountResolver do
   defp account_owner_with_token(account_owner) do
     {:ok, token, _claims} = Guardian.encode_and_sign(account_owner)
     Map.put(account_owner, :token, token)
+  end
+
+  defp user_with_token(user) do
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+    Map.put(user, :token, token)
   end
 
   defp extract_error_msg(changeset) do
