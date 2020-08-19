@@ -2,6 +2,7 @@ defmodule KidsChores.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias KidsChores.Accounts.AccountOwner
+  alias KidsChores.Chores.Chore
 
   schema "users" do
     field :name, :string
@@ -9,6 +10,8 @@ defmodule KidsChores.Accounts.User do
     field :token, :string, virtual: true
 
     belongs_to :account_owner, AccountOwner
+
+    has_many :chores, Chore
 
     timestamps()
   end

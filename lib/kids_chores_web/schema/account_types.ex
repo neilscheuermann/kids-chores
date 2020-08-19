@@ -21,6 +21,8 @@ defmodule KidsChoresWeb.Schema.AccountTypes do
     field :id, :id
     field :name, :string
     field :token, :string
+
+    field :chores, list_of(:chore)
   end
 
   object :account_queries do
@@ -32,6 +34,13 @@ defmodule KidsChoresWeb.Schema.AccountTypes do
     @desc "Get a list of users belonging to the current_account_owner"
     field :users, list_of(:user) do
       resolve(&Resolvers.AccountResolver.users/3)
+    end
+
+    @desc "Get a user by id"
+    field :user, :user do
+      arg(:user_id, non_null(:id))
+
+      resolve(&Resolvers.AccountResolver.user/3)
     end
   end
 

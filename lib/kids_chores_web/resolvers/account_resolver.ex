@@ -57,6 +57,18 @@ defmodule KidsChoresWeb.Resolvers.AccountResolver do
     {:error, "Unauthenticated"}
   end
 
+  def user(_parent, %{user_id: user_id}, _resolutions) do
+    user_id
+    |> Accounts.get_user()
+    |> case do
+      nil ->
+        {:error, "No user by that id"}
+
+      user ->
+        {:ok, user}
+    end
+  end
+
   def users(_parent, _args, %{
         context: %{current_account_owner: current_account_owner}
       }) do

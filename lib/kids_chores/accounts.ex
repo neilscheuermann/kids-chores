@@ -69,7 +69,7 @@ defmodule KidsChores.Accounts do
       nil
 
   """
-  def get_user(id), do: Repo.get(User, id)
+  def get_user(id), do: Repo.get(User, id) |> Repo.preload(:chores)
 
   @doc """
   Creates a user.
