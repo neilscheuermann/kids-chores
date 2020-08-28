@@ -17,7 +17,7 @@ export default function User() {
           <ul></ul>
           {user.chores.map(({ name, progressDays, goalDays }) => {
             return (
-              <li>
+              <li key={name}>
                 {name} : {progressDays || 0}/{goalDays}
               </li>
             );

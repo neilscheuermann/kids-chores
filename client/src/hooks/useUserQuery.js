@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
-const USERS_QUERY = gql`
+const USER_QUERY = gql`
   query user($userId: ID!) {
     user(userId: $userId) {
       id
@@ -16,7 +16,7 @@ const USERS_QUERY = gql`
 `;
 
 export default function useUserQuery(userId) {
-  const { data, loading } = useQuery(USERS_QUERY, {
+  const { data, loading } = useQuery(USER_QUERY, {
     variables: { userId },
   });
 

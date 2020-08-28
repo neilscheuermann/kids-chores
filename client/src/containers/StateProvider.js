@@ -41,6 +41,7 @@ const StateProvider = ({
         setUserId(id);
       }
     } else {
+      // Clear and reset all cookies if setAuth(null) or setAuth()
       Cookies.remove("token");
       Cookies.remove("currentUserToken");
       Cookies.remove("accountOwnerId");
@@ -51,7 +52,9 @@ const StateProvider = ({
   };
 
   return (
-    <AuthContext.Provider value={{ token, accountOwnerId, setAuth }}>
+    <AuthContext.Provider
+      value={{ token, accountOwnerId, currentUserToken, setAuth }}
+    >
       {children}
     </AuthContext.Provider>
   );
