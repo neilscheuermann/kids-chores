@@ -48,7 +48,7 @@ export default function UserLogin() {
     pinInput.current.clear();
   };
 
-  if (currentUserId) {
+  if (currentUserId === userId) {
     return <Redirect to={`/user/${userId}`} />;
   }
 
