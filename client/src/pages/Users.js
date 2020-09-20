@@ -51,7 +51,6 @@ export default function Users() {
   return (
     <>
       <h1>Users</h1>
-      <CreateUserForm />
       <div>
         {!data ? null : (
           <div>
@@ -63,6 +62,8 @@ export default function Users() {
           </div>
         )}
       </div>
+      Add users
+      <CreateUserForm />
     </>
   );
 }

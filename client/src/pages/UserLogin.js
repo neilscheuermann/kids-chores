@@ -17,8 +17,7 @@ const AUTHENTICATE_USER_MUTATION = gql`
 `;
 
 export default function UserLogin() {
-  const { currentUserToken, setAuth } = useContext(AuthContext);
-  const { history } = useReactRouter();
+  const { currentUserId, setAuth } = useContext(AuthContext);
   const [password, setValue] = useState("");
   const { id: userId } = useParams();
   const pinInput = useRef(null);
@@ -29,6 +28,9 @@ export default function UserLogin() {
         console.error(
           `Poopsiedaisy... 💩 there was an error authenticating user. \n See Error: ${error}`
         ),
+      onCompleted: ({ authenticateUser: { id, token } }) => {
+        setAuth({ currentUserToken: token, currentUserId: id });
+      },
     }
   );
 
@@ -44,24 +46,14 @@ export default function UserLogin() {
   const onSubmit = () => {
     authenticateUser({ variables: { userId, password } });
     pinInput.current.clear();
-    history.push(`/user/${userId}`);
   };
 
-  if (data) {
-    const {
-      authenticateUser: { token },
-    } = data;
-    setAuth({ currentUserToken: token });
-  }
-
-  if (currentUserToken) {
-    return <Redirect to="/user/10" />;
+  if (currentUserId) {
+    return <Redirect to={`/user/${userId}`} />;
   }
 
   return (
     <div>
-      {data && data.authenticateUser && "IT WORKED!!!"}
-      {error && "ERROR!!!"}
       <PinInput
         length={5}
         focus
